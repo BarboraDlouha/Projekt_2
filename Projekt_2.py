@@ -12,6 +12,21 @@ email: Barbora-Dlouha@seznam.cz
 # Separator
 print(60 * "-")
 
+# Loading libraries
+import random
+
+# Generating a four-digit number with unique digits, do not start with zero
+def generate_unique_four_digit_number():
+    while True:
+        digits = random.sample(range(0, 10), 4)
+        if digits[0] != 0:
+            return digits, int("".join(map(str, digits)))
+
+# Generování čísla
+digits, number = generate_unique_four_digit_number()
+print(f"Vygenerované číslo: {number}{digits}")
+    
+        
 # Listing the introductory text
 print(
     "Hi there!", 
@@ -21,3 +36,4 @@ print(
     45 * "-", 
     sep="\n"
     )
+
