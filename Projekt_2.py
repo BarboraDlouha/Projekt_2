@@ -15,15 +15,16 @@ print(60 * "-")
 # Loading libraries
 import random
 
-# Function definition for generating a unique four-digit number, does not start with zero
-def generate_unique_four_digit_number():
+# Function definition for generating a unique four-digit number that does not start with zero
+def generate_unique_number():
+    """Generate a 4-digit number with unique digits that does not start with zero."""
     while True:
         digits = random.sample(range(0, 10), 4)
         if digits[0] != 0:
             return digits, int("".join(map(str, digits)))
 
 # Generating a four-digit number with unique digits, does not start with zero
-generated_digits, generated_number = generate_unique_four_digit_number()
+generated_digits, generated_number = generate_unique_number()
 print(f"Vygenerované číslo: {generated_digits} {generated_number}")
             
 # Listing the introductory text
@@ -40,6 +41,7 @@ guessed_number = input("Enter a four-digit number: ")
 
 # Function definition for validating correct input
 def validate_guess_number(guess):
+    """validates user input (checks the number and correctness of characters, duplicates and the starting digit, which must not be zero)"""
     # List to store all errors
     errors = [] 
     # Check length
@@ -68,3 +70,5 @@ while True:
     else:
         print(f"Errors:\n{validation_result}")
         break
+
+print(list(guessed_number))
