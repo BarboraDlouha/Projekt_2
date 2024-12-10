@@ -103,17 +103,9 @@ Let's play a bulls and cows game.
 """)
 
 # Inputting the guessed number
-guessed_number = (input("Enter a four-digit number: "))
+
 
 # User input verification
-while True:
-    validation_result = validate_guess_number(guessed_number)
-    if validation_result == "OK":
-        break
-    else:
-        print(f"Yout input did not meet the following conditions:\n{validation_result}")
-        break
-
 
 # Game loop
 while True:
@@ -128,7 +120,10 @@ while True:
         # Calculate bulls and cows
         bulls, cows = calculate_bulls_and_cows(generated_digits, guessed_number_list)
 
-        print(f"Bulls: {bulls}, Cows: {cows}")
+        bull_word = "bull" if bulls == 1 else "bulls"
+        cow_word = "cow" if cows == 1 else "cows"
+
+        print(f"{bulls} {bull_word}, {cows} {cow_word}")
 
         # Check for win condition
         if bulls == 4:
