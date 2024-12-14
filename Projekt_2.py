@@ -19,14 +19,16 @@ from typing import List, Tuple, Union
 # Defining functions:
 
 # 1. Function for generating a unique four-digit number that does not start with zero
-def generate_unique_number() -> Tuple[List[int], int]:
+def generate_unique_number() -> Tuple[List[int], int, str]:
     """
     Generate a 4-digit number with unique digits that does not start with zero.
     """
     while True:
         digits = random.sample(range(0, 10), 4)
         if digits[0] != 0:
-            return digits, int("".join(map(str, digits)))
+            number_as_int = int("".join(map(str, digits)))  
+            number_as_str = "".join(map(str, digits))  
+            return digits, number_as_int, number_as_str
         
 # 2. Function for validating correct input
 def validate_guess_number(guessed_number: str) -> Union[str, str]:
@@ -74,9 +76,8 @@ def calculate_bulls_and_cows(secret_number: str, guessed_number: str) -> Tuple[i
     return bulls, cows
 
 # Generating a four-digit number with unique digits that does not start with zero
-generated_digits, generated_number = generate_unique_number()
-print(f"Vygenerované číslo: {generated_digits} {generated_number}")
-            
+generated_digits, generated_number_as_int, generated_number_as_str = generate_unique_number()
+          
 # Listing the introductory text
 print(f"""
 Hi there!
@@ -86,23 +87,17 @@ Let's play a bulls and cows game.
 {'-' * 45}
 """)
 
-# Inputting the guessed number
-
-
-# User input verification
-
-# Game loop
+# Main game loop
 while True:
+    # Inputting the guessed number
     guessed_number = input("Enter a four-digit number: ")
 
-    # Validate user input
+    # User input verification
     validation_result = validate_guess_number(guessed_number)
+    
     if validation_result == "OK":
-        # Convert guessed_number to a list of integers
-        guessed_number_list = [int(digit) for digit in guessed_number]
-
         # Calculate bulls and cows
-        bulls, cows = calculate_bulls_and_cows(generated_digits, guessed_number_list)
+        bulls, cows = calculate_bulls_and_cows(generated_number_as_str, guessed_number)
 
         bull_word = "bull" if bulls == 1 else "bulls"
         cow_word = "cow" if cows == 1 else "cows"
