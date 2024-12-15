@@ -17,7 +17,7 @@ import random
 from typing import List, Tuple, Union
 import time
 
-# Defining functions:
+# Defining Functions:
 
 # 1. Function for generating a unique four-digit number that does not start with zero
 def generate_unique_number() -> Tuple[List[int], int, str]:
@@ -57,7 +57,7 @@ def validate_guess_number(guessed_number: str) -> Union[str, str]:
     # Everything is valid
     return "OK"
 
-# 3. Function to calculate bulls and cows
+# 3. Function for calculating bulls and cows
 def calculate_bulls_and_cows(secret_number: str, guessed_number: str) -> Tuple[int, int]:
     """
     Counts the number of 'bulls' and 'cows'.
@@ -76,13 +76,13 @@ def calculate_bulls_and_cows(secret_number: str, guessed_number: str) -> Tuple[i
 
     return bulls, cows
 
-# 4. Function to calculate statistics
+# 4. Function for calculating statistics
 def calculate_statistics(attempts: List[int], times: List[float]) -> Tuple[int, float, float, float]:
     """
     Calculate game statistics: best score, average attempts, best time, average time
     """
     if not attempts or not times:
-        return (0, 0.0, 0.0, 0.0)  # If no games have been played, return zeroed statistics
+        return (0, 0.0, 0.0, 0.0)
 
     best_score = min(attempts) 
     average_attempts = sum(attempts) / len(attempts) 
@@ -105,6 +105,7 @@ game_statistics = []
 # List to store the time (in seconds) for each game
 game_times = [] 
 
+# Main game loop: can restart the game when the player chooses to play again.
 while True:
     # Generating a four-digit number with unique digits that does not start with zero
     generated_digits, generated_number_as_int, generated_number_as_str = generate_unique_number()
@@ -113,6 +114,7 @@ while True:
     # Initial value for the number of attempts
     attempts = 0
     
+    # Guessing loop:  finds out the status of player's guesses until the number is correctly guessed
     while True:
         # Inputting the guessed number
         guessed_number = input("Enter a four-digit number: ")
@@ -138,9 +140,11 @@ while True:
                 print(f"Congratulations! You've guessed the number in {attempts} attempts!")
                 print(f"It took you {int(elapsed_time // 60)} minutes and {int(elapsed_time % 60)} seconds.")
 
+                # completing the sheets of attempts and times
                 game_statistics.append(attempts)
                 game_times.append(elapsed_time)
                 break
+            
         # Listing of non-compliant conditions
         else:
             print(f"Your input did not meet the following conditions:\n{validation_result}")
