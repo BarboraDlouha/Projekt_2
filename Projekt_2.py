@@ -137,14 +137,14 @@ while True:
                 # End measuring time
                 end_time = time.time()
                 elapsed_time = end_time - start_time
-                print(f"Congratulations! You've guessed the number in {attempts} attempts!")
-                print(f"It took you {int(elapsed_time // 60)} minutes and {int(elapsed_time % 60)} seconds.")
+                print(f"Congratulations! You've guessed the number in {attempts} attempt(s)!")
+                print(f"It took you {int(elapsed_time // 60)} minute(s) and {int(elapsed_time % 60)} second(s).")
 
                 # completing the sheets of attempts and times
                 game_statistics.append(attempts)
                 game_times.append(elapsed_time)
                 break
-            
+
         # Listing of non-compliant conditions
         else:
             print(f"Your input did not meet the following conditions:\n{validation_result}")
@@ -156,8 +156,8 @@ while True:
     print(f"Games played: {len(game_statistics)}")
     print(f"Best score (fewest attempts): {best_score}")
     print(f"Average attempts per game: {avg_attempts:.2f}")
-    print(f"Best time: {int(best_time // 60)} minutes and {int(best_time % 60)} seconds")
-    print(f"Average time per game: {int(avg_time // 60)} minutes and {int(avg_time % 60)} seconds")
+    print(f"Best time: {int(best_time // 60)} minute(s) and {int(best_time % 60)} second(s)")
+    print(f"Average time per game: {int(avg_time // 60)} minute(s) and {int(avg_time % 60)} second(s)")
 
     # Asking the user to play again
     choice = input("\nWould you like to play again? (y/n): ")
