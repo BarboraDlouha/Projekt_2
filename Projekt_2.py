@@ -76,8 +76,20 @@ def calculate_bulls_and_cows(secret_number: str, guessed_number: str) -> Tuple[i
 
     return bulls, cows
 
-# Generating a four-digit number with unique digits that does not start with zero
-generated_digits, generated_number_as_int, generated_number_as_str = generate_unique_number()
+# 4. Function to calculate statistics
+def calculate_statistics(attempts: List[int], times: List[float]) -> Tuple[int, float, float, float]:
+    """
+    Calculate game statistics: best score, average attempts, best time, average time
+    """
+    if not attempts or not times:
+        return (0, 0.0, 0.0, 0.0)  # If no games have been played, return zeroed statistics
+
+    best_score = min(attempts) 
+    average_attempts = sum(attempts) / len(attempts) 
+    best_time = min(times)    
+    average_time = sum(times) / len(times) 
+
+    return best_score, average_attempts, best_time, average_time
           
 # Listing the introductory text
 print(f"""
@@ -88,41 +100,66 @@ Let's play a bulls and cows game.
 {'-' * 45}
 """)
 
-# Start measuring time
-start_time = time.time() 
-
-attempts = 0
+# List to store the number of attempts per game
+game_statistics = []  
+# List to store the time (in seconds) for each game
+game_times = [] 
 
 while True:
-    # Inputting the guessed number
-    guessed_number = input("Enter a four-digit number: ")
-
-    # Inputting user verification
-    validation_result = validate_guess_number(guessed_number)
+    # Generating a four-digit number with unique digits that does not start with zero
+    generated_digits, generated_number_as_int, generated_number_as_str = generate_unique_number()
+    # Start measuring time
+    start_time = time.time()
+    # Initial value for the number of attempts
+    attempts = 0
     
-    if validation_result == "OK":
-        # Counting the number of attempts
-        attempts += 1
-        # Calculating bulls and cows
-        bulls, cows = calculate_bulls_and_cows(generated_number_as_str, guessed_number)
+    while True:
+        # Inputting the guessed number
+        guessed_number = input("Enter a four-digit number: ")
+        # Inputting user verification
+        validation_result = validate_guess_number(guessed_number)
+        
+        if validation_result == "OK":
+            # Counting the number of attempts
+            attempts += 1
+            # Calculating bulls and cows
+            bulls, cows = calculate_bulls_and_cows(generated_number_as_str, guessed_number)
 
-        bull_word = "bull" if bulls == 1 else "bulls"
-        cow_word = "cow" if cows == 1 else "cows"
+            bull_word = "bull" if bulls == 1 else "bulls"
+            cow_word = "cow" if cows == 1 else "cows"
 
-        print(f"{bulls} {bull_word}, {cows} {cow_word}")
+            print(f"{bulls} {bull_word}, {cows} {cow_word}")
 
-        # Checking for win condition
-        if bulls == 4:
-            # End measuring time
-            end_time = time.time()
-            elapsed_time = end_time - start_time
-            print(f"Congratulations! You've guessed the number in {attempts} attempts!")
-            print(f"It took you {int(elapsed_time // 60)} minutes and {int(elapsed_time % 60)} seconds.")
-            break
-    # Listing of non-compliant conditions
-    else:
-        print(f"Your input did not meet the following conditions:\n{validation_result}")
+            # Checking for win condition
+            if bulls == 4:
+                # End measuring time
+                end_time = time.time()
+                elapsed_time = end_time - start_time
+                print(f"Congratulations! You've guessed the number in {attempts} attempts!")
+                print(f"It took you {int(elapsed_time // 60)} minutes and {int(elapsed_time % 60)} seconds.")
 
+                game_statistics.append(attempts)
+                game_times.append(elapsed_time)
+                break
+        # Listing of non-compliant conditions
+        else:
+            print(f"Your input did not meet the following conditions:\n{validation_result}")
+
+    # Calculating statistics after the game ends
+    best_score, avg_attempts, best_time, avg_time = calculate_statistics(game_statistics, game_times)
+
+    print("\nGame Statistics:")
+    print(f"Games played: {len(game_statistics)}")
+    print(f"Best score (fewest attempts): {best_score}")
+    print(f"Average attempts per game: {avg_attempts:.2f}")
+    print(f"Best time: {int(best_time // 60)} minutes and {int(best_time % 60)} seconds")
+    print(f"Average time per game: {int(avg_time // 60)} minutes and {int(avg_time % 60)} seconds")
+
+    # Asking the user to play again
+    choice = input("\nWould you like to play again? (y/n): ")
+    if choice.lower() != "y":
+        print("Thank you for playing! Goodbye!")
+        break
 
     
 
