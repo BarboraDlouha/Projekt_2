@@ -15,6 +15,7 @@ print(60 * "-")
 # Loading libraries and modules
 import random
 from typing import List, Tuple, Union
+import time
 
 # Defining functions:
 
@@ -87,16 +88,22 @@ Let's play a bulls and cows game.
 {'-' * 45}
 """)
 
+# Start measuring time
+start_time = time.time()
+
 # Main game loop
+attempts = 0
 while True:
     # Inputting the guessed number
     guessed_number = input("Enter a four-digit number: ")
 
-    # User input verification
+    # Inputting user verification
     validation_result = validate_guess_number(guessed_number)
     
     if validation_result == "OK":
-        # Calculate bulls and cows
+        # Counting the number of attempts
+        attempts += 1
+        # Calculating bulls and cows
         bulls, cows = calculate_bulls_and_cows(generated_number_as_str, guessed_number)
 
         bull_word = "bull" if bulls == 1 else "bulls"
@@ -104,10 +111,15 @@ while True:
 
         print(f"{bulls} {bull_word}, {cows} {cow_word}")
 
-        # Check for win condition
+        # Checking for win condition
         if bulls == 4:
-            print("Congratulations! You've guessed the number!")
+            # End measuring time
+            end_time = time.time()
+            elapsed_time = end_time - start_time
+            print(f"Congratulations! You've guessed the number in {attempts} attempts!")
+            print(f"It took you {int(elapsed_time // 60)} minutes and {int(elapsed_time % 60)} seconds.")
             break
+    # Listing of non-compliant conditions
     else:
         print(f"Your input did not meet the following conditions:\n{validation_result}")
 
