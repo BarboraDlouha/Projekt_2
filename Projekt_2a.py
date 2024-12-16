@@ -4,7 +4,7 @@
 
 print(60 * "-")
 print("""
-projekt_2.py: druhý projekt do Engeto Online Python Akademie
+projekt_2a.py: druhý projekt do Engeto Online Python Akademie
 
 author: Barbora Dlouha
 email: Barbora-Dlouha@seznam.cz
@@ -110,6 +110,13 @@ def main_game_loop():
     game_statistics = []  
     game_times = []       
     while True:
+        print(f"""
+Hi there!
+{'-' * 45}
+I've generated a random 4 digit number for you.
+Let's play a bulls and cows game.
+{'-' * 45}
+""")
         attempts, elapsed_time = play_single_game()
         game_statistics.append(attempts)
         game_times.append(elapsed_time)
