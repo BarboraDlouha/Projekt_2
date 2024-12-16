@@ -1,25 +1,33 @@
-# Separator 
-print(60 * "-")
+#==================================================================================
+# Header
+#==================================================================================
 
-# Header  
+print(60 * "-")
 print("""
 projekt_2.py: druhý projekt do Engeto Online Python Akademie
 
 author: Barbora Dlouha
 email: Barbora-Dlouha@seznam.cz
 """)
-
-# Separator
 print(60 * "-")
 
-# Loading libraries and modules
+#==================================================================================
+# Import libraries and modules
+#==================================================================================
 import random
 from typing import List, Tuple, Union
 import time
 
-# Defining Functions:
+#==================================================================================
+# Global variables and constants
+#==================================================================================
 
-# 1. Function for generating a unique four-digit number that does not start with zero
+game_statistics = [] # List to store the number of attempts per game
+game_times = [] # List to store the time (in seconds) for each game
+
+#==================================================================================
+# Function definitions:
+#==================================================================================
 def generate_unique_number() -> Tuple[List[int], int, str]:
     """
     Generate a 4-digit number with unique digits that does not start with zero.
@@ -31,7 +39,6 @@ def generate_unique_number() -> Tuple[List[int], int, str]:
             number_as_str = "".join(map(str, digits))  
             return digits, number_as_int, number_as_str
         
-# 2. Function for validating correct input
 def validate_guess_number(guessed_number: str) -> Union[str, str]:
     """ 
     validates user input (checks the number and correctness of characters, 
@@ -57,7 +64,6 @@ def validate_guess_number(guessed_number: str) -> Union[str, str]:
     # Everything is valid
     return "OK"
 
-# 3. Function for calculating bulls and cows
 def calculate_bulls_and_cows(secret_number: str, guessed_number: str) -> Tuple[int, int]:
     """
     Counts the number of 'bulls' and 'cows'.
@@ -76,7 +82,6 @@ def calculate_bulls_and_cows(secret_number: str, guessed_number: str) -> Tuple[i
 
     return bulls, cows
 
-# 4. Function for calculating statistics
 def calculate_statistics(attempts: List[int], times: List[float]) -> Tuple[int, float, float, float]:
     """
     Calculate game statistics: best score, average attempts, best time, average time
@@ -99,11 +104,6 @@ I've generated a random 4 digit number for you.
 Let's play a bulls and cows game.
 {'-' * 45}
 """)
-
-# List to store the number of attempts per game
-game_statistics = []  
-# List to store the time (in seconds) for each game
-game_times = [] 
 
 # Main game loop: can restart the game when the player chooses to play again.
 while True:
