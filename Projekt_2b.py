@@ -12,19 +12,14 @@ email: Barbora-Dlouha@seznam.cz
 print(60 * "-")
 
 #==================================================================================
-# Import libraries and modules
+# Constants:
 #==================================================================================
 
-#==================================================================================
-# Function definitions:
-#==================================================================================
-
-def print_welcome_and_rules() -> None:
-    """
-    Print the welcome message, game rules, and the initial numbered grid for Tic Tac Toe.
-    The grid shows positions numbered from 1 to 9 where players can place their marks.
-    """
-    print("""
+GRID_SIZE = 9          
+EMPTY_CELL = " "       
+PLAYER_X = "x"         
+PLAYER_O = "o"    
+WELCOME_TEXT = f"""
 Welcome to Tic Tac Toe
 =============================================
 GAME RULES:
@@ -37,8 +32,19 @@ marks in a:
 - Diagonal row
 =============================================
 Here is the initial game grid with positions numbered 1-9:
-""")
-    print_grid(["1", "2", "3", "4", "5", "6", "7", "8", "9"])
+"""     
+
+#==================================================================================
+# Function definitions:
+#==================================================================================
+
+def print_welcome_and_rules() -> None:
+    """
+    Print the welcome message, game rules, and the initial numbered grid for Tic Tac Toe.
+    The grid shows positions numbered from 1 to 9 where players can place their marks.
+    """
+    print(WELCOME_TEXT)
+    print_grid([str(i + 1) for i in range(GRID_SIZE)])
     print("\nLet's start the game!")
 
 
@@ -79,10 +85,10 @@ def validate_player_input(input_str: str, grid: list[str]) -> tuple[bool, list[s
     else:
         move = int(input_str)
         # Check if the number is within the valid range
-        if move < 1 or move > 9:
+        if move < 1 or move > GRID_SIZE:
             errors.append("The number must be in the range of 1 to 9.")
         # Check if the position is already occupied
-        elif grid[move - 1] in ["x", "o"]:
+        elif grid[move - 1] != EMPTY_CELL:
             errors.append("The chosen position is already taken. Please choose another spot.")
 
     # Return True if there are no errors, otherwise return False and the error list
@@ -139,16 +145,18 @@ def main_game_loop():
     """
     Main game loop for Tic Tac Toe.
     Players 'o' and 'x' take turns to make moves until there is a winner or the grid is full.
-    """
+   """
+
+while True:    
     # Prints rules and a numbered grid
     print_welcome_and_rules()
 
     # Initial empty grid and the starting player 'o'
-    grid = [" "] * 9
-    current_player = "o"
+    grid = [EMPTY_CELL] * GRID_SIZE
+    current_player = PLAYER_O
 
     # Game loop
-    for turn in range(9):  
+    for turn in range(GRID_SIZE):  
         print_grid(grid)  
         move = get_validated_move(grid, current_player)
         grid[move] = current_player  
@@ -157,20 +165,20 @@ def main_game_loop():
         if check_winner(grid, current_player):
             print_grid(grid)  
             print(f'Congratulations! Player "{current_player}" wins!')
-            return
+            break
 
         # Substitution of players
-        current_player = "x" if current_player == "o" else "o"
-
-    # if the game ends in a draw
-    print_grid(grid)
-    print("It's a draw! No one wins.")
+        current_player = PLAYER_X if current_player == PLAYER_O else PLAYER_O
+    else:
+        # if the game ends in a draw
+        print_grid(grid)
+        print("It's a draw! No one wins.")
 
     # Ask for restart
-        choice = input("\nWould you like to play again? (y/n): ").lower()
-        if choice != 'y':
-            print("Thanks for playing! Goodbye!")
-            break
+    choice = input("\nWould you like to play again? (y/n): ").lower()
+    if choice != 'y':
+        print("Thanks for playing! Goodbye!")
+        break
 
 #==================================================================================
 # Main Program
