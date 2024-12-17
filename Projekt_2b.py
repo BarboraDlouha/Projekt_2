@@ -164,7 +164,7 @@ def main_game_loop():
         current_player = PLAYER_O
 
         # Game loop
-        for turn in range(GRID_SIZE):  
+        for _ in range(GRID_SIZE):  
             print_grid(grid)  
             move = get_validated_move(grid, current_player)
             grid[move] = current_player  
