@@ -141,48 +141,56 @@ def check_winner(grid: list[str], player: str) -> bool:
             return True
     return False
 
+def ask_to_play_again() -> bool:
+    """
+    Ask the user if they want to play the game again.
+    Returns:
+    - bool: True if the user wants to restart, otherwise False.
+    """
+    choice = input("\nWould you like to play again? (y/n): ").lower()
+    return choice == "y"
+
 def main_game_loop():
     """
     Main game loop for Tic Tac Toe.
     Players 'o' and 'x' take turns to make moves until there is a winner or the grid is full.
-   """
+    """
+    while True:    
+        # Prints rules and a numbered grid
+        print_welcome_and_rules()
 
-while True:    
-    # Prints rules and a numbered grid
-    print_welcome_and_rules()
+        # Initial empty grid and the starting player 'o'
+        grid = [EMPTY_CELL] * GRID_SIZE
+        current_player = PLAYER_O
 
-    # Initial empty grid and the starting player 'o'
-    grid = [EMPTY_CELL] * GRID_SIZE
-    current_player = PLAYER_O
-
-    # Game loop
-    for turn in range(GRID_SIZE):  
-        print_grid(grid)  
-        move = get_validated_move(grid, current_player)
-        grid[move] = current_player  
-
-        # Winner check
-        if check_winner(grid, current_player):
+        # Game loop
+        for turn in range(GRID_SIZE):  
             print_grid(grid)  
-            print(f'Congratulations! Player "{current_player}" wins!')
+            move = get_validated_move(grid, current_player)
+            grid[move] = current_player  
+
+            # Winner check
+            if check_winner(grid, current_player):
+                print_grid(grid)  
+                print(f"Congratulations! Player \"{current_player}\" wins!")
+                break
+
+            # Substitution of players
+            current_player = PLAYER_X if current_player == PLAYER_O else PLAYER_O
+        else:
+            # If the game ends in a draw
+            print_grid(grid)
+            print("It's a draw! No one wins.")
+
+        # Ask for restart
+        if not ask_to_play_again():
+            print("Thanks for playing! Goodbye!")
             break
 
-        # Substitution of players
-        current_player = PLAYER_X if current_player == PLAYER_O else PLAYER_O
-    else:
-        # if the game ends in a draw
-        print_grid(grid)
-        print("It's a draw! No one wins.")
 
-    # Ask for restart
-    choice = input("\nWould you like to play again? (y/n): ").lower()
-    if choice != 'y':
-        print("Thanks for playing! Goodbye!")
-        break
-
-#==================================================================================
-# Main Program
-#==================================================================================
+    #==================================================================================
+    # Main Program
+    #==================================================================================
 
 if __name__ == "__main__":
     main_game_loop()
