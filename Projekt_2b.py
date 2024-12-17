@@ -159,12 +159,18 @@ def main_game_loop():
             print(f'Congratulations! Player "{current_player}" wins!')
             return
 
-        # Střídání hráčů
+        # Substitution of players
         current_player = "x" if current_player == "o" else "o"
 
-    # Pokud hra skončí bez výherce
+    # if the game ends in a draw
     print_grid(grid)
     print("It's a draw! No one wins.")
+
+    # Ask for restart
+        choice = input("\nWould you like to play again? (y/n): ").lower()
+        if choice != 'y':
+            print("Thanks for playing! Goodbye!")
+            break
 
 #==================================================================================
 # Main Program
